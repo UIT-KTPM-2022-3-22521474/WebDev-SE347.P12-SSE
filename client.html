@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSE Example</title>
+</head>
+<body>
+  <h1>Server-Sent Events Example</h1>
+  <p id="serverTime">Server Time: </p>
+  <p id="connections">Connections: </p>
+
+  <script>
+    const eventSource = new EventSource('/stream');
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      document.getElementById('serverTime').textContent = `Server Time: ${data.serverTime}`;
+      document.getElementById('connections').textContent = `Connections: ${data.connections}`;
+    };
+
+    eventSource.onerror = () => {
+      console.error('Error connecting to SSE');
+    };
+  </script>
+</body>
+</html>
